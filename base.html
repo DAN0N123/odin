@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Signup Form</title>
+</head>
+<body>
+    <div class="bigbox">
+        <img src="background.jpg" width="650px" height="1100px">
+        <div class="formandsuch">
+            <div class ="header">
+                <p>This is not a real online service! You know you need something like this in your life to help you realize your deepest dreams.</p>
+                <p>Sign up <em>now</em> to get started</p>
+                <p>You <em>know</em> you want to.</p>
+            </div>
+            <div class="form">
+                <form aria-label="Let's do this!" action="#" method="post" onsubmit="return checkPassword();">
+                    <h1> Let's do this! </h1>
+                    <div class="section">
+                        <div class="input">
+                            <label for="First Name"> FIRST NAME</label>
+                            <input type="text" id="First Name" name="First Name" maxlength="20">
+                        </div>
+                        <div class="input">
+                        <label for="Last Name"> LAST NAME</label>
+                        <input type="text" id="Last Name" name="Last Name" maxlength="20">
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="input">
+                            <label for="email"> EMAIL </label>
+                            <input type="email" id="email" name="e-mail">
+                        </div>
+                        <div class="input">
+                            <label for="phonenumber"> PHONE NUMBER </label>
+                            <input type="number" id="phonenumber" name="phone">
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="input">
+                            <label for="password"> PASSWORD </label>
+                            <input type="password" id="password" name="password" >
+                        </div>
+                        <div class="input">
+                            <label for="confirmpassword"> CONFIRM PASSWORD </label>
+                            <input type="password" id="confirmpassword" name="confirmpassword" >
+                        </div>
+                    </div>
+                    <div class="buttonandsuch">
+                        <button type="submit"> Create Account</button>
+                        <p>Already have an account? <a href="#"> Log in</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            function checkPassword() {
+                var firstName = document.getElementById("First Name");
+                var lastName = document.getElementById("Last Name");
+                var email = document.getElementById("email");
+                var phoneNumber = document.getElementById("phonenumber");
+                var password = document.getElementById("password");
+                var confirmPassword = document.getElementById("confirmpassword");
+
+                if (firstName.value.trim() === "") {
+                firstName.setCustomValidity("Please enter your first name");
+                firstName.classList.add("invalid");
+                } else {
+                    firstName.setCustomValidity("");
+                    firstName.classList.remove("invalid");
+                }
+
+                if (lastName.value.trim() === "") {
+                    lastName.setCustomValidity("Please enter your last name");
+                    lastName.classList.add("invalid");
+                } else {
+                    lastName.setCustomValidity("");
+                    lastName.classList.remove("invalid");
+                }
+
+                if (email.value.trim() === "") {
+                    email.setCustomValidity("Please enter your email");
+                    email.classList.add("invalid");
+                } else {
+                    email.setCustomValidity("");
+                    email.classList.remove("invalid");
+                }
+
+                if (phoneNumber.value.trim().length !== 9) {
+                    phoneNumber.setCustomValidity("Please enter a valid phone number");
+                    phoneNumber.classList.add("invalid");
+                } else {
+                    phoneNumber.setCustomValidity("");
+                    phoneNumber.classList.remove("invalid");
+                }
+
+                if (password.value !== confirmPassword.value) {   
+                    confirmPassword.setCustomValidity("Passwords do not match");
+                    confirmPassword.classList.add("invalid");
+                } else {  
+                    confirmPassword.setCustomValidity("");
+                    confirmPassword.classList.remove("invalid");
+                }
+                if (
+                    firstName.classList.contains("invalid") ||
+                    lastName.classList.contains("invalid") ||
+                    email.classList.contains("invalid") ||
+                    phoneNumber.classList.contains("invalid") ||
+                    password.classList.contains("invalid") ||
+                    confirmPassword.classList.contains("invalid")
+                ) {
+                    return false;
+                }
+
+                return true; 
+            }
+
+            document.getElementById("First Name").addEventListener("blur", checkPassword);
+            document.getElementById("Last Name").addEventListener("blur", checkPassword);
+            document.getElementById("email").addEventListener("blur", checkPassword);
+            document.getElementById("phonenumber").addEventListener("blur", checkPassword);
+            document.getElementById("password").addEventListener("blur", checkPassword);
+            document.getElementById("confirmpassword").addEventListener("blur", checkPassword);
+        });
+    </script>
+</body>
+</html>
