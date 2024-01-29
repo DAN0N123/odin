@@ -6,7 +6,36 @@
     <title>RPS</title>
 </head>
 <body>
+    <div class="bigbox">
+        <div class="buttons">
+            <button class="rock"> ROCK</button>
+            <button class="paper"> PAPER</button>
+            <button class="scissors"> SCISSORS</button>
+        </div>
+        </br>
+        <div class="results">
+            <div class="lastround"> </div>
+            </br>
+            <div class="score"> Score is 0:0 </div>
+        </div>
+    </div>
     <script>
+        const bigbox = document.querySelector('.bigbox')
+        bigbox.style.cssText = "display:flex; flex-direction: column; align-items: center;"
+        let player_score = 0;
+        let computer_score = 0;
+        let won = false;
+        const rock = document.querySelector('.rock')
+        const paper = document.querySelector('.paper')
+        const scissors = document.querySelector('.scissors')
+        rock.addEventListener('click', () => play("rock"))
+        paper.addEventListener('click', () => play("paper"))
+        scissors.addEventListener('click', () => play("scissors"))
+
+        const results = document.querySelector('.score')
+        const lastround = document.querySelector('.lastround')
+        results.style.cssText = "display:flex; align-items: center; gap: 32px"
+
         function getComputerChoice(){
             const choices = ["rock", "paper", "scissors"];
             const choice = Math.floor(Math.random() * choices.length)
@@ -19,41 +48,59 @@
             "scissors":"paper"
 
         }
-        let ask = () => prompt("What is your choice?")
-        function play(){
-            const playerSelection = ask().toLowerCase();
-            const computerSelection = getComputerChoice();
-            if (computerSelection == legend[playerSelection]){
-                console.log(`You win ${playerSelection} beats ${computerSelection}!`)
-                return 1
+        function check(){
+            if (player_score == 5){
+                won = true;
+                lastround.textContent = ''
+                results.textContent = `Player wins ${player_score} to ${computer_score}`;
+                const play_again = document.createElement('button');
+                play_again.textContent = "PLAY AGAIN";
+                play_again.addEventListener('click', () => {
+                    player_score = 0
+                    computer_score = 0
+                    results.removeChild(play_again)
+                    won = false;
+                    results.textContent = "Score is 0:0"
+                });
+                results.appendChild(play_again);
+                
             }
-            else if (computerSelection == playerSelection){
-                console.log("It's a draw!")
-                return play()
+            else if (computer_score == 5){
+                won = true;
+                lastround.textContent = ''
+                results.textContent = `Computer wins ${computer_score} to ${player_score}`;
+                const play_again = document.createElement('button');
+                play_again.textContent = "PLAY AGAIN";
+                play_again.addEventListener('click', () => {
+                    player_score = 0
+                    computer_score = 0
+                    results.removeChild(play_again)
+                    won = false;
+                    results.textContent = "Score is 0:0"
+                });
+                results.appendChild(play_again);
             }
-            else{
-                console.log(`You lose ${computerSelection} beats ${playerSelection}!`)
-                return 0
-            };
         }
-
-        function game(){
-            let player_score = 0;
-            let computer_score = 0;
-            for (let i = 0; i < 5; i++) {
-                let x = play();
-                switch (x){
-                    case 1:
-                        ++player_score
-                        break;
-                    case 0:
-                        ++computer_score;
-                        break;
+        function play(playerSelection){
+            if (!won){
+                const computerSelection = getComputerChoice();
+                
+                if (computerSelection == legend[playerSelection]){
+                    ++player_score;
+                    lastround.textContent = "Player wins"
+                    results.textContent = (`Score is ${player_score}:${computer_score}`);
                 }
-                console.log(`Score is ${player_score}:${computer_score}`)
+                else if (computerSelection == playerSelection){;
+                    lastround.textContent = ("It's a draw!");
+                }
+                else{
+                    ++computer_score;
+                    lastround.textContent = "Computer wins"
+                    results.textContent = (`Score is ${player_score}:${computer_score}`);    
+                };
+                return check()
             }
         }
-
     </script>
 </body>
 </html>
