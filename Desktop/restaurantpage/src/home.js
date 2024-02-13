@@ -14,9 +14,9 @@ function fade_in(element) {
 }
 
 function section_one(){
-    const main_div = document.getElementById('content');
     const bigbox = document.createElement('div');
-    bigbox.classList.add("bigbox");
+    bigbox.setAttribute('id', "bigbox_home");
+    bigbox.classList.add('bigbox');
     const text = document.createElement('div');
     text.classList.add('text');
     const h2 = document.createElement('h2');
@@ -29,10 +29,10 @@ function section_one(){
     bigbox.appendChild(text);
     const restaurantImage = document.createElement('img');
     restaurantImage.src = MainImage;
+    restaurantImage.classList.add('restaurant_image')
     bigbox.appendChild(restaurantImage);
     bigbox.style.opacity = 0;
-    main_div.appendChild(bigbox);
-    fade_in(bigbox)
+    return bigbox;
 }
 
 

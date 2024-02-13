@@ -4,21 +4,26 @@
     padding-top: 100px;
 }
 
-.bigbox{
+#bigbox_menu{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding: 32px;
     border: 3px solid black;
     background-color: white;
     border-radius: 8px;
-    width: 300px;
+    width: 800px;
+    gap: 50px;
 }
 
-.div{
-    width: 150px;
-    height: 100px;
+.menu_item{
+    display: flex;
+    height: 175px;
+    width: calc(100% - 35px);
     background-color: white;
     border: 3px solid black;
     border-radius: 8px;
+    padding: 16px;
+    justify-content: flex-start;
+    gap: 50px;
 }
