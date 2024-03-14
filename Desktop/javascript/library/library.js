@@ -55,12 +55,12 @@ function displayBooks(){
         x_img.style.width = '100%';
         x_img.style.height = '100%';
         x_img.src = 'x.png';
-        x_img.classList.add('x_img')
-        x.classList.add('x')
-        x.appendChild(x_img)
-        x.addEventListener('click', () => deleteBook(book_id))
-        bookNode.setAttribute('id', book_id)
-        bookNode.appendChild(x)
+        x_img.classList.add('x_img');
+        x.classList.add('x');
+        x.appendChild(x_img);
+        x.addEventListener('click', () => deleteBook(book_id));
+        bookNode.setAttribute('id', book_id);
+        bookNode.appendChild(x);
         bookNode.appendChild(title);
         bookNode.appendChild(pages);
         bookNode.appendChild(author);
@@ -72,11 +72,13 @@ function displayBooks(){
 
 function openPopup() {
     document.getElementById('popup').style.display = 'block';
+    document.querySelector('.library').classList.add('popup-open');
 }
 
 function closePopup() {
     document.getElementById('popup').style.display = 'none';
     document.getElementById('bookForm').reset();
+    document.querySelector('.library').classList.remove('popup-open');
 }
 
 function submitForm(event) {
@@ -96,4 +98,12 @@ function submitForm(event) {
 
 
 displayBooks()
+
+
+
+// let card = event.target.parentNode.parentNode;
+// let index = card.index
+// myLibrary[index].read = !myLibrary[index].read;
+// let p = card.querySelector('p:nth-child(5)').textContent = Read: ${myLibrary[index].read};
+
 

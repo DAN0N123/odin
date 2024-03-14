@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+      THE TITLE OF YOUR WEBPAGE
+    </h1>
+    <div id="container">
+        <div class="content">
+        This is the glorious text-content!
+      </div>
+      <button id="btn">CLICK ME BABY</button>
+    </div>
+    <script>
+        const container = document.querySelector('#container');
+        const paragraph = document.createElement('p');
+        paragraph.style.color = 'red';
+        paragraph.textContent = "Hey  I'm red!";
+        container.appendChild(paragraph);
+        const header3 = document.createElement("h3");
+        header3.style.color = 'blue'
+        header3.textContent = "I'm a blue h3!"
+        container.appendChild(header3)
+        const div = document.createElement('div')
+        div.style.border = '3px solid black'
+        div.style.backgroundColor = 'pink'
+        container.appendChild(div)
+        const header1 = document.createElement('h1')
+        header1.textContent = "I'm a div"
+        div.appendChild(header1)
+        const paragraph2 = document.createElement('p')
+        paragraph2.textContent = "ME TOO!"
+        div.appendChild(paragraph2)
+        btn.addEventListener('click', function (e) {
+        if (e.target.style.background == 'blue'){
+            e.target.style.background = 'white'
+        }
+        else{
+            e.target.style.background = 'blue'
+        }
+        });
+    </script>
+  </body>
+</html>
