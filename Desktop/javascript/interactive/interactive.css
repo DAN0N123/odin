@@ -82,6 +82,7 @@ nav{
 .arrow{
     position: absolute;
     margin-top: 185px;
+    opacity: 1 !important;
 }
 
 .arrowLeft{
@@ -96,15 +97,39 @@ nav{
     cursor: pointer;
 }
 
-.hideSlide{
+.hideSlide:not(.arrow){
     display: none !important;
 }
 
 .slide{
-    opacity: 0 !important;
-    transition: opacity 1s ease-in;
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
 }
 
 .show{
-    opacity: 1 !important;
+    opacity: 1;
+}
+
+.bottomButtons{
+    position: absolute;
+    display: flex;
+    gap: 5px;
+    margin-top: 375px;
+    margin-left: calc((400px - 15px*8 - 5px*7) / 2);
+}
+
+.bottomButton{
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    background-color: #05986285;
+}
+
+.bottomButton:hover{
+    background-color: #059862;
+    cursor: pointer;
+}
+
+.active{
+    background-color: red;
 }

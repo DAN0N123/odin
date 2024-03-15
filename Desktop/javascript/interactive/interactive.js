@@ -10,23 +10,33 @@ dropdownButton.addEventListener('click', function(){
 
 let slideIndex = 1;
 
+const buttons = document.querySelectorAll('.bottomButton')
+buttons.forEach( button => {
+    const index = parseInt(button.id.replace('button', ''))
+    button.addEventListener('click', () => {
+        showSlide(index)
+        slideIndex = parseInt(index)
+    })
+    
+})
 
 function showSlide(slideIndex){
     console.log(slideIndex)
+    buttons.forEach( button => {
+        button.classList.remove('active');
+        if(button.id == `button${slideIndex}`){
+            button.classList.add('active')
+        }
+    })
     const slides = document.querySelectorAll('img')
     for(const slide of slides){
-        console.log(slide)
-        if(!slide.classList.contains('hideSlide')){
-            setTimeout( () => slide.classList.add('hideSlide'), 200)
-            
-        }
         if(slide.id == slideIndex){
-            setTimeout( () => slide.classList.remove('hideSlide'), 200)
-            setTimeout( () => slide.classList.add('show'), 200)
+            slide.classList.remove('hideSlide')
+            setTimeout( () => { slide.classList.add('show') }, 20)
             continue
         }
-        setTimeout( () => slide.classList.remove('show'), 200)
-        
+        slide.classList.add('hideSlide')
+        slide.classList.remove('show');
     }
 }
 
