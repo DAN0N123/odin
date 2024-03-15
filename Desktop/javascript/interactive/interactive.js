@@ -20,6 +20,15 @@ buttons.forEach( button => {
     
 })
 
+const automaticSlider = setInterval( function(){
+    if(slideIndex < 8){
+        slideIndex++
+    }else{
+        slideIndex = 1
+    }
+    showSlide(slideIndex)
+}, 5000)
+
 function showSlide(slideIndex){
     console.log(slideIndex)
     buttons.forEach( button => {
