@@ -47,6 +47,10 @@
     align-items: center;
 }
 
+.invalid{
+    background-color: red;
+}
+
 .x{
     position: absolute;
     opacity: 0%;

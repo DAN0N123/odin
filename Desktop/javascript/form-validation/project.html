@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORM VALIDATION</title>
+    <script src="project.js" defer></script>
+    <link rel="stylesheet" href="project.css">
+</head>
+<body>
+    <div class="bigbox">
+        <form class="myForm" novalidate>
+            <input type="email" id="email" required placeholder="Email">
+                <!-- <div class = "errorMessage"></div> -->
+            </input>
+            <input type="text" id="country" required placeholder="Country" pattern="[Aa]fghanistan|[Aa]lbania|[Aa]lgeria|[Aa]ndorra|[Aa]ngola|
+            [Aa]ntigua and Barbuda|[Aa]rgentina|[Aa]rmenia|[Aa]ustralia|[Aa]ustria|[Aa]zerbaijan|[Tt]he Bahamas|[Bb]ahrain|[Bb]angladesh
+            |[Bb]arbados|[Bb]elarus|[Bb]elgium|[Bb]elize|[Bb]enin|[Bb]hutan|[Bb]olivia|[Bb]osnia and Herzegovina|[Bb]otswana|[Bb]razil
+             |[Bb]runei|[Bb]ulgaria|[Bb]urkina Faso|[Bb]urundi|[Cc]abo Verde|[Cc]ambodia|[Cc]ameroon|[Cc]anada|[Cc]entral African Republic
+              |[Cc]had|[Cc]hile|[Cc]hina|[Cc]olombia|[Cc]omoros|[Cc]ongo, Democratic Republic of the|[Cc]ongo, Republic of the|[Cc]osta Rica
+               |[Cc]ôte dIvoire|[Cc]roatia|[Cc]uba|[Cc]yprus|[Cc]zech Republic|[Dd]enmark|[Dd]jibouti|[Dd]ominica|[Dd]ominican Republic
+                |[Ee]ast Timor| [Ee]cuador|[Ee]gypt|[Ee]l Salvador|[Ee]quatorial Guinea|[Ee]ritrea|[Ee]stonia|[Ee]swatini
+                 |[Ee]thiopia|[Ff]iji|[Ff]inland|[Ff]rance|[Gg]abon|[Tt]he Gambia|[Gg]eorgia|[Gg]ermany|[Gg]hana|[Gg]reece|[Gg]renada
+                  |[Gg]uatemala|[Gg]uinea|[Gg]uinea-Bissau|[Gg]uyana|[Hh]aiti|[Hh]onduras|[Hh]ungary|[Ii]celand|[Ii]ndia|[Ii]ndonesia
+                   |[Ii]ran|[Ii]raq|[Ii]reland|[Ii]srael|[Ii]taly|[Jj]amaica|[Jj]apan|[Jj]ordan|[Kk]azakhstan|[Kk]enya|[Kk]iribati
+                    |[Kk]orea, North|[Kk]orea, South|[Kk]osovo|[Kk]uwait|[Kk]yrgyzstan|[Ll]aos|[Ll]atvia|[Ll]ebanon|[Ll]esotho|[Ll]iberia
+                     |[Ll]ibya|[Ll]iechtenstein|[Ll]ithuania|[Ll]uxembourg|[Mm]adagascar|[Mm]alawi|[Mm]alaysia|[Mm]aldives|[Mm]ali|[Mm]alta
+                      |[Mm]arshall Islands|[Mm]auritania|[Mm]auritius|[Mm]exico|[Mm]icronesia, Federated States of|[Mm]oldova|[Mm]onaco|[Mm]ongolia
+                       |[Mm]ontenegro|[Mm]orocco|[Mm]ozambique|[Mm]yanmar (Burma)|[Nn]amibia|[Nn]auru|[Nn]epal|[Nn]etherlands|[Nn]ew Zealand
+                        |[Nn]icaragua|[Nn]iger|[Nn]igeria|[Nn]orth Macedonia|[Nn]orway|[Oo]man|[Pp]akistan|[Pp]alau|[Pp]anama|[Pp]apua New Guinea
+                         |[Pp]araguay|[Pp]eru|[Pp]hilippines|[Pp]oland|[Pp]ortugal|[Qq]atar|[Rr]omania|[Rr]ussia|[Rr]wanda|[Ss]aint Kitts and Nevis
+                          |[Ss]aint Lucia|[Ss]aint Vincent and the Grenadines|[Ss]amoa|[Ss]an Marino|[Ss]ao Tome and Principe|[Ss]audi Arabia|[Ss]enegal
+                           |[Ss]erbia|[Ss]eychelles|[Ss]ierra Leone|[Ss]ingapore|[Ss]lovakia|[Ss]lovenia|[Ss]olomon Islands|[Ss]omalia|[Ss]outh Africa
+                            |[Ss]pain|[Ss]ri Lanka|[Ss]udan|[Ss]udan, South|[Ss]uriname|[Ss]weden|[Ss]witzerland|[Ss]yria|[Tt]aiwan|[Tt]ajikistan
+                             |[Tt]anzania|[Tt]hailand|[Tt]ogo|[Tt]onga|[Tt]rinidad and Tobago|[Tt]unisia|[Tt]urkey|[Tt]urkmenistan|[Tt]uvalu|[Uu]ganda
+                              |[Uu]kraine|[Uu]nited Arab Emirates|[Uu]nited Kingdom|[Uu]nited States|[U]sa|[Uu]ruguay|[Uu]zbekistan|[Vv]anuatu|[Vv]atican City
+                               |[Vv]enezuela|[Vv]ietnam|[Yy]emen|[Zz]ambia|[Zz]imbabwe"></input>
+            <input type="text" id="zipcode" placeholder= "Zip code (XX-XXX)" pattern="[0-9][0-9]-[0-9][0-9][0-9]" required>
+                <!-- <div class = "errorMessage"></div> -->
+            </input>
+            <input type="password" id="password" placeholder="Password" minlength="10" required>
+            </input>
+            <input type="password" id="confirmPassword" placeholder="Confirm password" required> 
+            </input>
+            <button type="submit" id="submitButton"> SUBMIT </button>
+        </form>
+    </div>
+</body>
+</html>

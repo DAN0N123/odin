@@ -14,6 +14,19 @@ function Book(author, title, pages, is_read) {
     this.is_read = is_read;
 }
 
+
+const authorField = document.getElementById('author');
+const form = document.querySelector('form')
+authorField.addEventListener('input', (event) => {
+    if (authorField.validity.tooShort) {
+      authorField.setCustomValidity("I am expecting a real author");
+      authorField.classList.add('invalid')
+    } else {
+      authorField.classList.remove('invalid')
+      authorField.setCustomValidity("");
+    }
+  });
+
 function addBookToLibrary(author, title, pages, is_read) {
     const book = new Book(author, title, pages, is_read);
     myLibrary.push(book);
