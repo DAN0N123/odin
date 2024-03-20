@@ -1,0 +1,137 @@
+body{
+    margin: 0;
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Bold.ttf');
+}
+
+#globeViz{
+    position: absolute;
+    margin-left: 600px;
+}
+canvas{
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+}
+
+form{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+input{
+    outline: none;
+    width: 400px;
+    font-size: 21px;
+    height: 40px;
+    border: none;
+    border-bottom: 2px solid blaCK;
+}
+
+.bigbox{
+    padding-top: 50px;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    width: 600px;
+    height: 100vh;
+    align-items: flex-end;
+}
+
+#search{
+    background-color: transparent;
+    border: none;
+}
+#search:hover{
+    cursor: pointer;
+}
+
+.weatherBox{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 150px 60px 1fr;
+    width: 500px;
+    border: 1px solid black;
+    height: 600px;
+}
+
+.city{
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+}
+
+.weather{
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+}
+
+.temp1{
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+}
+
+.cityName{
+    display: flex;
+    gap: 30px;
+    font-family: 'Roboto';
+    align-items: center;
+    font-size: 23px;
+}
+
+.time{
+    display: flex;
+    gap: 20px;
+    font-family: 'Roboto';
+    align-items: center;
+    font-size: 16px;
+}
+
+.city{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.weather{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.currentWeather{
+    display: flex;
+    gap: 40px;
+    font-family: 'Roboto';
+    font-size: 25px;
+}
+
+.temperature,
+.humidity,
+.pressure,
+.wind{
+    display: flex;
+    gap: 15px;
+    font-family: 'Roboto';
+    font-size: 17px;
+    align-items: center;
+    user-select: none;
+}
+
+.info1,
+.info2{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 50px;
+    align-items: center;
+    gap: 50px;
+}
+
+
+
+.temperature p:hover{
+    cursor: pointer;
+}
