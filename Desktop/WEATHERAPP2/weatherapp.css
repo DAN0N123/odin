@@ -1,6 +1,8 @@
 body{
     margin: 0;
     overflow: hidden;
+    padding: 0;
+    background-image: url('background.png')
 }
 
 @font-face {
@@ -29,12 +31,17 @@ input{
     font-size: 21px;
     height: 40px;
     border: none;
-    border-bottom: 2px solid blaCK;
+    border: 2px solid transparent;
+    border-bottom: 2px solid black;
+    border-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
 .bigbox{
     padding-top: 50px;
     display: flex;
+    margin: 0;
     gap: 30px;
     flex-direction: column;
     width: 600px;
@@ -54,9 +61,10 @@ input{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 150px 60px 1fr;
+    padding-top: 50px;
     width: 500px;
     border: 1px solid black;
-    height: 600px;
+    height: 550px;
 }
 
 .city{

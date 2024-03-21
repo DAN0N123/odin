@@ -1,11 +1,9 @@
-// import Globe from 'globe.gl';
 
 async function getWeatherData(place){
     try{
         const rawWeatherData = await fetch(`https://api.weatherapi.com/v1/current.json?key=96d166292d97494d98d134819241903&q=${place}`, {mode: 'cors'})
         const rawWeatherDataJson = await rawWeatherData.json()
         const parsedData = returnDataSet(rawWeatherDataJson)
-        generateGlobe(parsedData.coordinates.lat, parsedData.coordinates.lon, parsedData.is_day)
         return parsedData
     }catch (error){
         console.log(`Error occured while fetching data: ${error}`)
@@ -13,21 +11,55 @@ async function getWeatherData(place){
     
 }
 
+function darkMode(){
+    const body = document.querySelector('body')
+    body.style.cssText = "background-image: url('night-background.png');"
+    const bigbox = document.querySelector('.bigbox')
+    bigbox.style.color = 'white'
+    const icons = document.querySelectorAll('svg');
+    icons.forEach( (icon) => {
+        icon.setAttribute('fill', 'white')
+    })
+    const searchBar = document.getElementById('searchBar')
+    searchBar.style.cssText = 'border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; border-bottom: 2px solid transparent;'
+    const weatherBox = document.querySelector('.weatherBox')
+    weatherBox.style.borderColor = 'white'
+}
 
-
+function lightMode(){
+    const body = document.querySelector('body')
+    body.style.cssText = "background-image: url('background.png');"
+    const bigbox = document.querySelector('.bigbox')
+    bigbox.style.color = 'black'
+    const icons = document.querySelectorAll('svg');
+    icons.forEach( (icon) => {
+        icon.setAttribute('fill', 'black')
+    })
+    const searchBar = document.getElementById('searchBar')
+    searchBar.style.cssText = 'border-bottom-left-radius: 0px; border-bottom-right-radius:0px; border-bottom: 2px solid black;'
+    const weatherBox = document.querySelector('.weatherBox')
+    weatherBox.style.borderColor = 'black'
+}
 
 function generateGlobe(lat, lng, is_day){
+    let background = null;
     const gData = [...Array(1).keys()].map(() => ({
     lat: lat,
     lng: lng,
     size: 0.5,
     color: 'red'
     }));
-
+    if(is_day === 1){
+        background = ('background.png')
+        lightMode()
+    }else{
+        background = ('night-background.png')
+        darkMode()
+    }
     Globe()
     .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg')
     .pointsData(gData)
-    .backgroundImageUrl('background.png')
+    .backgroundImageUrl(background)
     .pointAltitude('size')
     .pointColor('color')
     (document.getElementById('globeViz'))   
@@ -55,6 +87,7 @@ function returnDataSet(rawData){
 
 async function displayWeatherData(place){
     const weatherData = await getWeatherData(place);
+    generateGlobe(weatherData.coordinates.lat, weatherData.coordinates.lon, weatherData.is_day)
     const cityName = document.querySelector('.cityName p')
     cityName.textContent = weatherData.city
     const time = document.querySelector('.time p')
@@ -98,6 +131,8 @@ async function displayWeatherData(place){
     wind.textContent = `${weatherData.wind_kph} KPH`
     const humidity = document.querySelector('.humidity p')
     humidity.textContent = weatherData.humidity
+    const pressure = document.querySelector('.pressure p')
+    pressure.textContent = weatherData.pressure + ' hPa'
 }
 const form = document.querySelector('form')
 
@@ -109,4 +144,4 @@ form.addEventListener('submit', function(event){
     searchBar.value= ''
 })
 
-displayWeatherData('London')
+displayWeatherData('Los Angeles')
