@@ -6,24 +6,8 @@ const confirmPasswordField = document.getElementById('confirmPassword')
 const form = document.querySelector('form')
 
 
-const onClickOutside = (element, callback) => {
-    document.addEventListener('click', e => {
-      if (!element.contains(e.target)) callback();
-    });
-  };
 
-onClickOutside(passwordField, function(){
-    passwordField.innerHTML = ''
-});
 
-passwordField.addEventListener('click', function(){
-    if(this.children.length == 0){
-        const errorMessage = document.createElement('div')
-        errorMessage.classList.add('errorMessage')
-        passwordField.appendChild(errorMessage)
-    }
-    
-})
 
 function checkPasswordCorrectness(password){
     if(!/[A-Z]/.test(password)){
@@ -49,16 +33,15 @@ function checkPasswordValidity(password){
 
 function showEmailError(){
     if(emailField.validity.valueMissing){
-        emailField.setCustomValidity('This field is required')
+        emailField.setCustomValidity('This field is required');
     }else if(emailField.validity.typeMismatch){
-        emailField.setCustomValidity('Please enter a valid email')
+        emailField.setCustomValidity('Please enter a valid email');
     }else{
-        emailField.setCustomValidity('')
+        emailField.setCustomValidity('');
     }
 };
 
 function showCountryError(){
-    console.log(countryField.value);
     if(countryField.validity.valueMissing){
         countryField.setCustomValidity('This field is required')
     }else if(countryField.validity.patternMismatch){
@@ -81,11 +64,7 @@ function showZipcodeError(){
 
 form.addEventListener('submit', function(event){
     const passwordCorrectness = checkPasswordValidity(passwordField.value)
-    if (passwordCorrectness == true){
-    passwordField.setCustomValidity('')
-    event.preventDefault()
-    }
-
+    console.log(`passwordCorrectness: ${passwordCorrectness}`)
     if (!emailField.validity.valid) {
         showEmailError();
         event.preventDefault();
@@ -98,15 +77,15 @@ form.addEventListener('submit', function(event){
         showZipcodeError();
         event.preventDefault();
         console.log('zipcode wrong')
-    } else if (passwordCorrectness != true){
+    } else if (passwordCorrectness !== true){
         passwordField.setCustomValidity(passwordCorrectness)
         event.preventDefault();
         console.log('password wrong')
-    }else if (confirmPasswordField.validity.valueMissing){
+    } else if (confirmPasswordField.validity.valueMissing){
         confirmPasswordField.setCustomValidity('This field is required')
         event.preventDefault();
         console.log('confirm password wrong')
-    }else if (passwordField.value != confirmPasswordField.value){
+    } else if (passwordField.value != confirmPasswordField.value){
         confirmPasswordField.setCustomValidity("Passwords don't match")
         event.preventDefault();
         console.log('confirm password wrong')

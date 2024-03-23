@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+
+
+
+
+    <script>
+        function sumRange(n, total = 0){
+            if(n == 0){
+                return total
+            }else{
+                return sumRange(n - 1, total + n)
+            }
+        }
+
+        console.log(`Sum range: ${sumRange(3)}`)
+        
+        function power(n, e, product = n){
+            if(e === 1){
+                return product
+            }else{
+                return power(n, e - 1, product*n)
+            }
+        }
+
+        console.log(`Power: ${power(5, 3)}`)
+
+        function factorial(n, total = 1){
+            if(n === 0 || n === 1){
+                return total
+            }else{
+                return factorial(n - 1, total * n)
+            }
+        }
+        console.log(`Factorial: ${factorial(9)}`)
+
+
+        function all(array, callback){
+            var copy = copy || array.slice(); 
+
+            if(copy.length === 0) return true;
+
+            if(callback(copy[0])){
+                copy.shift();
+                return all(copy, callback);
+            } else {
+                return false;
+            }
+        }
+        console.log(`All: ${all([1,7,5], function(n){return n < 8})}`)
+
+        function productOfArray(arr, product = 1){
+            if(arr.length == 0){
+                return 0
+            }else if(arr.length == 1){
+                return product * arr[0]
+            }else{
+                product = product * arr[0]
+                arr.shift()
+                return productOfArray(arr, product)
+            }
+        }
+        console.log(`Product of array: ${productOfArray([5,5,5,5])}`)
+
+        function contains(object, value){
+            for (key in object){
+                if(Object.values(object).includes(value)){
+                    return true
+                }
+                return contains(object[key], value)
+            }
+            return false
+        }
+
+        var nestedObject = {
+            data: {
+                info: {
+                    stuff: {
+                        thing: {
+                            moreStuff: {
+                                magicNumber: 44,
+                                something: 'foo2'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        console.log(`Contains: ${contains(nestedObject, 44)}`)
+
+        function totalIntegers(array){
+            if(array.length === 0) return 0;
+
+            let total = 0;
+            let first = array.shift();
+
+            if(Array.isArray(first)){
+                total += totalIntegers(first)
+            } else if (Number.isInteger(first)){
+                total++
+            }
+
+            return total + totalIntegers(array)
+        }
+
+        console.log(`Total integers: ${totalIntegers([[[5], 3], 0, 2, ['foo'], [], [4, [5, 6]]])}`)
+
+        function sumSquares(array){
+            if(array.length === 0){
+                return 0
+            }
+
+            let total = 0;
+            let first = array.shift()
+
+            if(Array.isArray(first)){
+                total += sumSquares(first)
+            } else if (Number.isInteger(first)){
+                total = total + first*first
+            }
+
+            return total + sumSquares(array)
+
+        }
+
+        const l = [[1,2],3]
+
+        console.log(`Sum squares: ${sumSquares(l)}`)
+
+        function replicate(times, number, arr = []){
+            if(times < 0){
+                return []
+            }else{
+                if(times === 0){
+                    return arr
+                }
+                arr.push(number)
+                return replicate(times - 1, number, arr)
+            }
+
+            
+        }
+        console.log(`Replicate: ${replicate(6, 56)}`)
+
+
+        function fibs(number){
+            if(number == 0){
+                return []
+            }
+            if(number == 1){
+                return [0]
+            }
+            arr = [0, 1]
+            if(number == 2){
+                arr
+            }else{
+                for(let i = 0; i < number - 2; i++){
+                arr.push(arr[i] + arr[i + 1])
+            }
+            return arr
+            }
+            
+        }
+
+        console.log(`Fibs: ${fibs(51)}`)
+
+        function fibsRec(ogNumber, arr = [0,1], number = ogNumber){
+            if(number === 2){
+                return arr
+            }else{
+                arr.push(arr[ogNumber - number] + arr[ogNumber - number + 1])
+                number = number - 1
+                return fibsRec(ogNumber, arr, number)
+            }
+        }
+
+        console.log(`Fibs recursively: ${fibsRec(51)}`)
+
+        function fibsRec2(number, arr = [0,1]){
+            if(number == 2){
+                return arr
+            }else{
+                arr.push(arr[arr.length - 1] + arr[arr.length - 2])
+                --number
+                return fibsRec2(number, arr)
+            }
+        }
+
+        console.log(`Fibs recursively 2: ${fibsRec2(51)}`)
+        
+        function merge(left, right) {
+            let sortedArr = [] 
+            while (left.length && right.length) {
+                if (left[0] < right[0]) {
+                sortedArr.push(left.shift())
+                } else {
+                sortedArr.push(right.shift())
+                }
+            }
+            return [...sortedArr, ...left, ...right]
+            }
+
+        function mergeSort(arr){
+            if (arr.length <= 1) return arr;
+            const middleIndex = Math.round(arr.length / 2)
+            
+            let left = mergeSort(arr.slice(0, middleIndex))
+            let right = mergeSort(arr.slice(middleIndex))
+
+            return merge(left, right)
+        }
+
+        console.log(`Merge sort: ${mergeSort([3, 5, 8, 5, 99, 1])}`)
+    </script>
+</body>
+</html>

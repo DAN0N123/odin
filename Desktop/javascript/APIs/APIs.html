@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="APIs.css">
+</head>
+<body>
+
+    <div class="tvScreen"></div>
+    <img src="#">
+    
+
+  <script>
+
+    const img = document.querySelector('img');
+
+    async function getNewImg(){
+        const giphyResponse = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=d1F42HDlCubGRm1fW63gVlFeob3F8NVH&s=onepiece', {mode:'cors'})
+        const parsedResponse = await giphyResponse.json()
+        return parsedResponse.data.images.original.url
+    }
+    
+    img.addEventListener('click', async () => {
+        img.src = await getNewImg()
+        console.log(img.src)
+    })
+  </script>
+
+</body>
+</html>
