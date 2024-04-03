@@ -6,27 +6,101 @@ class Node {
         this.left = null;
         this.right = null;
         this.parent = null;
+        this.level = 0;
+        this.tree = null;
         Node.instances.push(this);
     }
+    deleteNode(){
+      const index = Node.instances.indexOf(this)
+      Node.instances.splice(index, 1)
+    }
+    subtreeHeights(){
+      const leftHeight = this.tree.height(this.left)
+      const rightHeight = this.tree.height(this.right)
+      return {'left': leftHeight, 'right': rightHeight}
+    }
+
+    static getNode(value){
+      let myNode;
+      for(const node of this.instances){
+        if(node.data === value){
+          myNode = node
+        }
+      }
+      return myNode
+    }
+
+    static ultimateLeafNode(){
+      let levels = [];
+      for(const node of this.instances){
+        levels.push(node.level)
+      }
+      return Math.max(...levels)
+    }
+      
 }
 
 
 
 class Tree {
+
     constructor(arr){
         const sortedArr = arr.sort( (a,b) => a - b)
         const myArr = Array.from(new Set(sortedArr))
+        this.nodes = []
         this.root = this.buildTree(myArr)
+        this.nodes.push(this.root)
+        this.root.tree = this
+
+    }
+    get inOrder(){
+      this._inOrder()
+      return this.inOrderArr;
     }
 
-    buildTree(arr){
+    get postOrder() {
+      this._postOrder();
+      return this.postOrderArr;
+    }
+
+    get preOrder() {
+      this._preOrder();
+      return this.preOrderArr;
+    }
+
+    get levelOrder() {
+      this._levelOrder()
+      return this.levelOrderArr
+
+    }
+
+    buildTree(arr, step = 0){
         if(arr.length === 0) return null;
         const middleIndex = Math.floor(arr.length / 2)
         const root = new Node(arr[middleIndex])
-        root.left = this.buildTree([...arr].splice(0, middleIndex));
-        if(root.left != null) root.left.parent = root;
-        root.right = this.buildTree([...arr].splice(middleIndex + 1));
-        if(root.right != null) root.right.parent = root;
+        step++
+        
+        root.left = this.buildTree([...arr].splice(0, middleIndex), step);
+        
+        if(root.left != null) {
+          root.left.parent = root
+          root.left.level = step
+          this.nodes.push(root.left);
+          root.left.tree = this
+        };
+
+          
+
+
+        root.right = this.buildTree([...arr].splice(middleIndex + 1), step);
+        
+        if(root.right != null){
+          root.right.parent = root;
+          root.right.level = step;
+          this.nodes.push(root.right);
+          root.right.tree = this
+        }
+        
         
         return root
     }
@@ -46,11 +120,13 @@ class Tree {
       }
       if(value < root.data){
         this.insert(value, root.left)
-      }
-    }
+      }}
 
-    find(value, node = this.root){
+
+
+    find(value, node = this.root) {
       if(node.data === value){
+        console.log(node)
         return node
       }else{
         if(node.left && value < node.data){
@@ -58,11 +134,12 @@ class Tree {
         }else if(node.right && value > node.data){
           return this.find(value, node.right)
         }
-        console.log("Value doesn't exist")
+        console.log("Value doesn't exist", node)
         return null
       }
     }
-    findLowest(root){
+
+    findLowest(root) {
       if(root.left === null){
         return root
       }else{return this.findLowest(root.left)}
@@ -101,7 +178,7 @@ class Tree {
       }
     }
 
-    levelOrder(){
+    _levelOrder(){
       if(this.root === null) return;
       const myArr = [];
       const myData = [];
@@ -113,78 +190,141 @@ class Tree {
         if(currentNode.right != null) myArr.push(currentNode.right)
         myArr.splice(0, 1)
       }
+      this.levelOrderArr = myData;
       return myData;
     }
 
     
 
-    preOrder(node = this.root){
+    _preOrder(node = this.root, arr = []){
+      if(arr.length === this.nodes.length){
+        this.preOrderArr = arr
+      }
+      if(node === null) return;
+      if(!arr.includes(node.data)){
+        arr.push(node.data)
+      };
+      this._preOrder(node.left, arr);
+      this._preOrder(node.right, arr);
+    }
+
+    _inOrder(node = this.root, arr = []){
+      if(arr.length === this.nodes.length){
+        this.inOrderArr = arr
+      }
       if(node === null) return;
 
-      console.log(node);
-      this.preOrder(node.left);
-      this.preOrder(node.right);
+      this._inOrder(node.left, arr);
+      if(!arr.includes(node.data)){
+        arr.push(node.data)
+      };
+      this._inOrder(node.right, arr);
 
     }
 
-    inOrder(node = this.root){
+    _postOrder(node = this.root, arr = []){
+      if(arr.length === this.nodes.length - 4){
+        this.postOrderArr = arr
+      }
+
       if(node === null) return;
 
-      this.inOrder(node.left);
-      console.log(node);
-      this.inOrder(node.right);
+      this._postOrder(node.left, arr);
+      this._postOrder(node.right, arr);
+      if(!arr.includes(node.data)){
+        arr.push(node.data)
+      };
 
     }
 
-    postOrder(node = this.root){
-      if(node === null) return;
-
-      
-      this.postOrder(node.left);
-      this.postOrder(node.right);
-      console.log(node);
-
+    height(node) {
+      if(typeof node === 'number'){
+        node = Node.getNode(node)
+        if(!node){
+          return null;
+        }
+      }
+      if (node === null) {
+          return -1; // Height of an empty subtree is -1
+      } else {
+          const leftHeight = this.height(node.left);
+          const rightHeight = this.height(node.right);
+  
+          return Math.max(leftHeight, rightHeight) + 1;
+      }
     }
+
+    depth(node){
+      const myNode = Node.getNode(node)
+      return myNode.level
+    }
+    
+
+    isBalanced(){
+      for(const node of this.nodes){
+        if(node.subtreeHeights().left > node.subtreeHeights().right + 1 || node.subtreeHeights().right > node.subtreeHeights().left + 1){
+          return false
+        }
+      } return true
+    }
+
+    rebalance(){
+      let nodeValues = [];
+      for(const node of this.nodes){
+        nodeValues.push(node.data)
+        node.deleteNode()
+        if(node != this.root) this.delete(node.data);
+      }
+      this.root.deleteNode()
+      this.root = null;
+
+      this.root = this.buildTree(nodeValues)
+    }
+
+
+    prettyPrint(node = this.root, prefix = "", isLeft = true){
+
+      if (node === null) {
+        return;
+      }
+      if (node.right !== null) {
+        this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+      }
+      console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+      if (node.left !== null) {
+        this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+      }
+    };
 }
 
 
-const myTree = new Tree([1,645,32,45,12,3,3,5678,3,3,56,7,3,2,2,1])
 
-
-function prettyPrint(node, prefix = "", isLeft = true){
-
-  if (node === null) {
-    return;
+function randomNumberArr(){
+  let numberArr = []
+  for(let i = 0; i < 30; i++){
+    let number = Math.random() * 100
+    number = Math.floor(number)
+    numberArr.push(number)
   }
-  if (node.right !== null) {
-    this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.left !== null) {
-    this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
-};
-// myTree.insert(13)
-// myTree.insert(8)
-// myTree.insert(25)
-// myTree.insert(17)
-// myTree.insert(58)
-// myTree.insert(41)
-// myTree.insert(67)
-// myTree.insert(22)
-// myTree.insert(62)
-// myTree.insert(54)
-// myTree.insert(61)
-// myTree.insert(55)
-// myTree.insert(34)
-// myTree.insert(69)
-// myTree.insert(48)
-// myTree.insert(29)
-// myTree.insert(39)
+  numberArr = Array.from(new Set(numberArr)).sort()
+  return numberArr
+}
 
-// console.log(myTree.delete(7))
-prettyPrint(myTree.root)
-console.log(myTree.levelOrder())
-// myTree.inOrder()
-myTree.postOrder()
 
+randomNumberArr()
+
+
+function bigTreeTest(){
+  const testTree = new Tree(randomNumberArr())
+
+  testTree.prettyPrint();
+
+  console.log(`Is the tree balanced: ${testTree.isBalanced()}`)
+
+  console.log(`All elements in level order: ${testTree.levelOrder}`)
+  console.log(`All elements in preorder: ${testTree.preOrder}`)
+  console.log(`All elements inorder: ${testTree.inOrder}`)
+  console.log(`All elements in post order: ${testTree.postOrder}`)
+}
+
+bigTreeTest()
