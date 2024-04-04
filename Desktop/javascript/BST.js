@@ -107,14 +107,24 @@ class Tree {
 
     insert(value, root = this.root){
       if(value < root.data && root.left === null){
-        root.left = new Node(value)
-        root.left.parent = root
+        let newNode = new Node(value)
+        root.left = newNode
+        newNode.parent = root
+        newNode.level = newNode.parent.level + 1
+        newNode.tree = this
+        this.nodes.push(newNode)
       }
       if(value > root.data && root.right === null){
-        root.right = new Node(value)
-        root.right.parent = root
-        
+        let newNode = new Node(value)
+        root.right = newNode
+        newNode.parent = root
+        newNode.level = newNode.parent.level + 1
+        newNode.tree = this
+        this.nodes.push(newNode)
       }
+
+
+
       if(value > root.data){
         this.insert(value, root.right)
       }
@@ -126,7 +136,6 @@ class Tree {
 
     find(value, node = this.root) {
       if(node.data === value){
-        console.log(node)
         return node
       }else{
         if(node.left && value < node.data){
@@ -272,12 +281,15 @@ class Tree {
       let nodeValues = [];
       for(const node of this.nodes){
         nodeValues.push(node.data)
+        // console.log(node)
+
         node.deleteNode()
+
         if(node != this.root) this.delete(node.data);
       }
       this.root.deleteNode()
       this.root = null;
-
+      this.nodes = [];
       this.root = this.buildTree(nodeValues)
     }
 
@@ -315,11 +327,28 @@ randomNumberArr()
 
 
 function bigTreeTest(){
-  const testTree = new Tree(randomNumberArr())
+  let testTree = new Tree(randomNumberArr())
 
   testTree.prettyPrint();
 
-  console.log(`Is the tree balanced: ${testTree.isBalanced()}`)
+  console.log(`Is the tree balanced: ${testTree.isBalanced() ? 'Yes' : 'No'}`)
+
+  console.log(`All elements in level order: ${testTree.levelOrder}`)
+  console.log(`All elements in preorder: ${testTree.preOrder}`)
+  console.log(`All elements inorder: ${testTree.inOrder}`)
+  console.log(`All elements in post order: ${testTree.postOrder}`)
+  console.log(' ')
+  console.log('Unbalancing the tree')
+  for(let i = 100; i < 132; i += 2){
+    testTree.insert(i)
+  }
+  testTree.prettyPrint()
+  console.log(`Is the tree balanced: ${testTree.isBalanced() ? 'Yes' : 'No'}`)
+  console.log(' ')
+  console.log(`Rebalancing the tree`)
+  testTree.rebalance()
+  testTree.prettyPrint()
+  console.log(`Is the tree balanced: ${testTree.isBalanced() ? 'Yes' : 'No'}`)
 
   console.log(`All elements in level order: ${testTree.levelOrder}`)
   console.log(`All elements in preorder: ${testTree.preOrder}`)
